@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "428613356091",
+    "project_id": "care-aac8d",
+    "storage_bucket": "care-aac8d.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:428613356091:android:763bcde7443b6079212a1e",
+        "android_client_info": {
+          "package_name": "com.example.care"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "428613356091-v9vtj7q8oqc18hs87t1gavef33afar4d.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.care",
+            "certificate_hash": "3c06f5a3d1b74d6f9ae7ec1ca2773adc976d7287"
+          }
+        },
+        {
+          "client_id": "428613356091-ns7k6icrrusfkgr1tlmnsiniq4uukgve.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAVN7mfXLuXr9RejKYrFUy-6oXc1ZRmOfo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "428613356091-ns7k6icrrusfkgr1tlmnsiniq4uukgve.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
