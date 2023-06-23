@@ -4,9 +4,6 @@ import 'package:care/core/util/resources/extensions_manager.dart';
 import 'package:care/core/util/widgets/default_button.dart';
 import 'package:care/core/util/widgets/default_text.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-
-import '../../../../core/util/resources/assets.gen.dart';
 
 class DoctorsScreen extends StatelessWidget {
   const DoctorsScreen({super.key});

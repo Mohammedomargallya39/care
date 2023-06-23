@@ -68,7 +68,7 @@ class MyApp extends StatelessWidget {
             create: (context) => sl<RegisterCubit>(),
           ),
           BlocProvider(
-            create: (context) => sl<HomeCubit>()..profile(id: id!),
+            create: (context) => sl<HomeCubit>(),
           ),
         ],
         child: MaterialApp(

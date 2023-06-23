@@ -1,5 +1,7 @@
 import 'package:care/core/util/resources/extensions_manager.dart';
 import 'package:care/core/util/widgets/default_text.dart';
+import 'package:care/core/util/widgets/default_text_field.dart';
+import 'package:care/features/home/presentation/controller/home_cubit.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../core/util/resources/colors_manager.dart';
@@ -10,6 +12,7 @@ class ProfileScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    HomeCubit homeCubit = HomeCubit.get(context);
     return Scaffold(
       backgroundColor: ColorsManager.mainColor,
       body: SafeArea(
@@ -27,9 +30,9 @@ class ProfileScreen extends StatelessWidget {
                   ),
                 ),
                 verticalSpace(5.h),
-                DefaultText(title: 'User name: $userNameProfile', style: Style.small,color: Colors.white,),
-                DefaultText(title: 'Email: $email', style: Style.small,color: Colors.white,),
-                DefaultText(title: 'Doctor: ${isDoctorProfile! ?'yes' : 'No'}', style: Style.small,color: Colors.white,),
+                DefaultTextField(controller: homeCubit.nameController, hint: 'Name:  $userNameProfile',disabled: true,label: 'Name',),
+                DefaultTextField(controller: homeCubit.nameController, hint: 'E-mail:  $email',disabled: true,label: 'Name'),
+                DefaultTextField(controller: homeCubit.nameController, hint: 'Doctor:  ${isDoctorProfile! ? 'yes' : 'No'}' ,disabled: true,label: 'Name'),
               ],
             ),
           )

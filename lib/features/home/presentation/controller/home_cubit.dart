@@ -9,6 +9,7 @@ import '../../../../core/util/resources/constants_manager.dart';
 import '../../../login/presentation/screens/login_screen.dart';
 import '../../domain/usecase/profile_usecase.dart';
 import '../screens/home_screen.dart';
+import '../screens/section_screen.dart';
 import 'home_states.dart';
 
 class HomeCubit extends Cubit<HomeStates> {
@@ -27,7 +28,7 @@ class HomeCubit extends Cubit<HomeStates> {
   List<Widget> widgets = [
     const HomeScreen(),
     const HomeScreen(),
-    const HomeScreen(),
+    const SectionScreen(),
     const ProfileScreen(),
   ];
 
@@ -38,6 +39,7 @@ class HomeCubit extends Cubit<HomeStates> {
   }
 
   TextEditingController searchController = TextEditingController();
+  TextEditingController nameController = TextEditingController();
 
 
 

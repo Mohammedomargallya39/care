@@ -139,7 +139,6 @@ class RegisterScreen extends StatelessWidget {
                             verticalSpace(4.h),
                             DefaultButton(
                                 elevation: 0.0,
-                                textOnly: false,
                                 color: ColorsManager.secondryColor,
                                 height: 3.h,
                                 text: 'Register',
