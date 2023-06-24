@@ -80,19 +80,7 @@ class HomeScreen extends StatelessWidget {
                         )
                       ],
                     ),
-                    verticalSpace(2.h),
-                    DefaultTextField(
-                      controller: homeCubit.searchController,
-                      hint: 'Search medical..',
-                      svgImg: Assets.images.svg.search,
-                      suffixIcon: IconButton(
-                          onPressed: ()
-                          {
-
-                          },
-                          icon: const Icon(Icons.filter_list)),
-                    ),
-                    verticalSpace(2.h),
+                    verticalSpace(10.h),
                     DefaultText(title: 'Service', style: Style.medium , color: ColorsManager.white,fontWeight: FontWeight.w600,fontSize: 30.rSp,align: TextAlign.start),
                     verticalSpace(1.h),
                     SizedBox(

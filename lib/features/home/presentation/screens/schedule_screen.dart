@@ -1,40 +1,37 @@
 import 'package:care/core/util/resources/colors_manager.dart';
 import 'package:care/core/util/resources/constants_manager.dart';
 import 'package:care/core/util/resources/extensions_manager.dart';
-import 'package:care/core/util/widgets/default_button.dart';
 import 'package:care/core/util/widgets/default_text.dart';
 import 'package:care/core/util/widgets/loadingPage.dart';
 import 'package:care/features/home/presentation/controller/home_cubit.dart';
 import 'package:care/features/home/presentation/controller/home_states.dart';
-import 'package:care/features/home/presentation/screens/book_appointment_screen.dart';
-import 'package:care/features/home/presentation/screens/doctor_profile.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../domain/entities/profile_entity.dart';
+import '../../domain/entities/get_appointment_entity.dart';
 
-class DoctorsScreen extends StatelessWidget {
-  const DoctorsScreen({super.key});
+class ScheduleScreen extends StatelessWidget {
+  const ScheduleScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
 
     HomeCubit homeCubit = HomeCubit.get(context);
-    homeCubit.doctor();
-    List<ProfileEntity>? results;
+    homeCubit.getAppointment();
+    List<GetAppointmentEntity>? result;
 
     return Scaffold(
       backgroundColor: ColorsManager.mainColor,
       body: SafeArea(
         child: BlocConsumer<HomeCubit,HomeStates>(
           listener: (context, state) {
-            if(state is DoctorSuccessState)
+            if(state is GetAppointmentSuccessState)
             {
-              results = state.doctorEntity;
+              result = state.getAppointmentEntity;
             }
           },
           builder: (context, state) {
-            return results == null?  const LoadingPage(): Column(
+            return Column(
               children: [
                 verticalSpace(2.h),
                 Container(
@@ -57,11 +54,12 @@ class DoctorsScreen extends StatelessWidget {
                         ),
                       ),
                       horizontalSpace(5.w),
-                      DefaultText(title: 'Doctor List', style: Style.medium,color: ColorsManager.white,fontWeight: FontWeight.bold,fontSize: 30.rSp),
+                      DefaultText(title: 'Appointment List', style: Style.medium,color: ColorsManager.white,fontWeight: FontWeight.bold,fontSize: 30.rSp),
                     ],
                   ),
                 ),
                 verticalSpace(4.h),
+                result == null ? const LoadingPage():
                 Expanded(
                   child: Padding(
                     padding: EdgeInsets.all(10.rSp),
@@ -72,7 +70,7 @@ class DoctorsScreen extends StatelessWidget {
                           padding: EdgeInsets.all(15.rSp),
                           child: Container(
                             padding: EdgeInsets.all(15.rSp),
-                            height: 28.h,
+                            height: 16.h,
                             width: double.infinity,
                             decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(10.rSp),
@@ -85,57 +83,30 @@ class DoctorsScreen extends StatelessWidget {
                                     Expanded(
                                       child: CircleAvatar(
                                         radius: 40.rSp,
-                                        backgroundImage: NetworkImage(results![index].profilePic),
+                                        backgroundImage: NetworkImage(result![index].doctorData.doctorPic),
                                       ),
                                     ),
                                     horizontalSpace(5.w),
                                     Expanded(
+                                      flex: 2,
                                       child: Column(
                                         crossAxisAlignment: CrossAxisAlignment.start,
                                         children: [
-                                          DefaultText(title:  results![index].userName, style: Style.small,color: ColorsManager.white,fontWeight: FontWeight.bold,fontSize: 22.rSp),
-                                          DefaultText(title:  results![index].email, style: Style.small,color: ColorsManager.white,fontWeight: FontWeight.w300,fontSize: 18.rSp),
+                                          DefaultText(title:  result![index].doctorData.doctorUserName, style: Style.small,color: ColorsManager.white,fontWeight: FontWeight.bold,fontSize: 22.rSp),
+                                          DefaultText(title:  result![index].doctorData.doctorEmail, style: Style.small,color: ColorsManager.white,fontWeight: FontWeight.w300,fontSize: 18.rSp),
+                                          DefaultText(title:  'Date: ${ result![index].date}', style: Style.small,color: ColorsManager.white,fontWeight: FontWeight.w300,fontSize: 16.rSp),
+                                          DefaultText(title:  'Schedule: ${ result![index].time}', style: Style.small,color: ColorsManager.white,fontWeight: FontWeight.w300,fontSize: 16.rSp),
                                         ],
                                       ),
                                     )
                                   ],
                                 ),
-                                verticalSpace(2.h),
-                                Row(
-                                  children: [
-                                    Expanded(
-                                      child: DefaultButton(
-                                        text: 'View Profile',
-                                        fontSize: 16.rSp,
-                                        color: ColorsManager.secondary,
-                                        onPressed: ()
-                                        {
-                                          navigateTo(context, DoctorProfileScreen(result: results,index: index,));
-                                        },
-
-                                      ),
-                                    ),
-                                    horizontalSpace(10.rSp),
-                                    Expanded(
-                                      child: DefaultButton(
-                                        text: 'Appointment',
-                                        fontSize: 16.rSp,
-                                        color: ColorsManager.secondary,
-                                        onPressed: ()
-                                        {
-                                          navigateTo(context, BookAppointmentScreen(id: results![index].id,));
-                                        },
-
-                                      ),
-                                    ),
-                                  ],
-                                )
                               ],
                             ),
                           ),
                         );
                       },
-                      itemCount: results!.length,
+                      itemCount: result!.length,
                     ),
                   ),
                 )

@@ -1,9 +1,13 @@
+import 'package:care/features/home/domain/usecase/doctor_profile_usecase.dart';
+import 'package:care/features/home/domain/usecase/doctor_usecase.dart';
+import 'package:care/features/home/domain/usecase/get_appointment_usecase.dart';
 import 'package:care/features/home/domain/usecase/profile_usecase.dart';
 import 'package:get_it/get_it.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../features/home/data/data_source/home_remote_data_source.dart';
 import '../../features/home/data/repository/home_repository.dart';
 import '../../features/home/domain/repository/home_base_repository.dart';
+import '../../features/home/domain/usecase/book_appointment_usecase.dart';
 import '../../features/home/presentation/controller/home_cubit.dart';
 import '../../features/login/data/data_source/login_remote_data_source.dart';
 import '../../features/login/data/repository/login_repository.dart';
@@ -34,6 +38,10 @@ Future<void> init() async {
   ));
   sl.registerLazySingleton<HomeCubit>(() => HomeCubit(
     profileUseCase: sl(),
+    doctorUseCase: sl(),
+    doctorProfileUseCase: sl(),
+    appointmentUseCase: sl(),
+    getAppointmentUseCase: sl(),
 
   ));
   sl.registerLazySingleton<Repository>(
@@ -60,6 +68,10 @@ Future<void> init() async {
   sl.registerLazySingleton(() => LoginUseCase(sl()));
   sl.registerLazySingleton(() => RegisterUseCase(sl()));
   sl.registerLazySingleton(() => ProfileUseCase(sl()));
+  sl.registerLazySingleton(() => DoctorUseCase(sl()));
+  sl.registerLazySingleton(() => DoctorProfileUseCase(sl()));
+  sl.registerLazySingleton(() => BookAppointmentUseCase(sl()));
+  sl.registerLazySingleton(() => GetAppointmentUseCase(sl()));
 
   //Data sources
   sl.registerLazySingleton<LogInBaseRemoteDataSource>(

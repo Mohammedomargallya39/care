@@ -1,4 +1,5 @@
-import 'package:care/core/util/widgets/loadingPage.dart';
+import 'package:care/features/home/domain/usecase/doctor_usecase.dart';
+import 'package:care/features/home/domain/usecase/get_appointment_usecase.dart';
 import 'package:care/features/home/presentation/screens/profile_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -7,19 +8,34 @@ import '../../../../core/error/failures.dart';
 import '../../../../core/network/local/cache_helper.dart';
 import '../../../../core/util/resources/constants_manager.dart';
 import '../../../login/presentation/screens/login_screen.dart';
+import '../../domain/usecase/book_appointment_usecase.dart';
+import '../../domain/usecase/doctor_profile_usecase.dart';
 import '../../domain/usecase/profile_usecase.dart';
 import '../screens/home_screen.dart';
+import '../screens/schedule_screen.dart';
 import '../screens/section_screen.dart';
 import 'home_states.dart';
 
 class HomeCubit extends Cubit<HomeStates> {
 
   final ProfileUseCase _profileUseCase;
+  final DoctorUseCase _doctorUseCase;
+  final DoctorProfileUseCase _doctorProfileUseCase;
+  final BookAppointmentUseCase _appointmentUseCase;
+  final GetAppointmentUseCase _getAppointmentUseCase;
 
   HomeCubit({
     required ProfileUseCase profileUseCase,
+    required DoctorUseCase doctorUseCase,
+    required DoctorProfileUseCase doctorProfileUseCase,
+    required BookAppointmentUseCase appointmentUseCase,
+    required GetAppointmentUseCase getAppointmentUseCase,
 })  :
         _profileUseCase = profileUseCase,
+        _doctorUseCase = doctorUseCase,
+        _doctorProfileUseCase = doctorProfileUseCase,
+        _appointmentUseCase = appointmentUseCase,
+        _getAppointmentUseCase = getAppointmentUseCase,
   super(HomeInitialState());
 
   static HomeCubit get(context) => BlocProvider.of(context);
@@ -27,7 +43,7 @@ class HomeCubit extends Cubit<HomeStates> {
 
   List<Widget> widgets = [
     const HomeScreen(),
-    const HomeScreen(),
+    const ScheduleScreen(),
     const SectionScreen(),
     const ProfileScreen(),
   ];
@@ -81,6 +97,84 @@ class HomeCubit extends Cubit<HomeStates> {
     });
 
   }
+
+  void doctor() async{
+    emit(LoadingDoctorState());
+    final result = await _doctorUseCase(const DoctorParams(isDoctor: true));
+
+    result.fold((failure)
+    {
+      emit(DoctorErrorState(mapFailureToMessage(failure)));
+    }, (data) async{
+      emit(DoctorSuccessState(data));
+    });
+  }
+
+
+
+  void doctorProfile({required int id}) async{
+    emit(LoadingDoctorProfileState());
+    final result = await _doctorProfileUseCase(DoctorProfileParams(id: id));
+
+    result.fold((failure)
+    {
+      emit(DoctorProfileErrorState(mapFailureToMessage(failure)));
+    }, (data) async{
+      emit(DoctorProfileSuccessState(data));
+    });
+  }
+
+
+  List<String> dateToday = [];
+  List<String> morningTimes = [];
+  List<String> eveningTimes = [];
+
+  bool isMorning = true;
+
+  void chooseAppointmentTime(bool timeNow)
+  {
+    isMorning = timeNow;
+    emit(ChangeTimeState());
+  }
+
+
+  bool isTimeSelected = false;
+  int? pressedIndex;
+
+  void selectedTime(bool isSelected)
+  {
+    isTimeSelected = isSelected;
+    emit(SelectedTimeState());
+  }
+
+  void bookAppointment({required int id, required String date, required String time}) async{
+    emit(LoadingBookAppointmentState());
+    final result = await _appointmentUseCase(BookAppointmentParams(
+        id: id,
+        date: date,
+        time: time
+    ));
+    result.fold((failure)
+    {
+      emit(ErrorBookAppointmentState(mapFailureToMessage(failure)));
+    }, (data) async{
+      emit(SuccessBookAppointmentState());
+    });
+  }
+
+
+  void getAppointment() async{
+    emit(LoadingGetAppointmentState());
+    final result = await _getAppointmentUseCase(const GetAppointmentParams());
+
+    result.fold((failure)
+    {
+      emit(GetAppointmentErrorState(mapFailureToMessage(failure)));
+    }, (data) async{
+      emit(GetAppointmentSuccessState(data));
+    });
+  }
+
 
 
 }
