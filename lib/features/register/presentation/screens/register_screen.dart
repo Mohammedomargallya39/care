@@ -37,6 +37,7 @@ class RegisterScreen extends StatelessWidget {
                     if(state is RegisterSuccessState)
                     {
                       debugPrintFullText('Login Success');
+                      designToastDialog(context: context, toast: TOAST.success,text: 'Register Successfully');
                     }
 
                     if (state is RegisterErrorState) {
