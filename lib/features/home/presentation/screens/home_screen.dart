@@ -8,6 +8,7 @@ import 'package:care/features/home/presentation/screens/doctors_screen.dart';
 import 'package:care/features/home/presentation/screens/labs_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import '../../../../core/util/resources/assets.gen.dart';
 import '../../domain/entities/profile_entity.dart';
 import '../controller/home_cubit.dart';
@@ -25,11 +26,11 @@ class HomeScreen extends StatelessWidget {
 
 
     List<String> images = [
-      Assets.images.png.doc,
-      Assets.images.png.microScope,
-      Assets.images.png.capsules,
-      Assets.images.png.virus,
-      Assets.images.png.virusButton
+      Assets.images.svg.doctor,
+      Assets.images.svg.telescope,
+      Assets.images.svg.capsule,
+      Assets.images.svg.virus,
+      Assets.images.svg.donate
     ];
 
     return Scaffold(
@@ -105,13 +106,14 @@ class HomeScreen extends StatelessWidget {
                               child: Container(
                                 height: 0.1.h,
                                 width: 20.w,
+                                padding: EdgeInsets.all(5.rSp),
                                 decoration: BoxDecoration(
                                     border: Border.all(color: ColorsManager.secondary),
                                     borderRadius: BorderRadius.circular(5.rSp),
-                                    image: DecorationImage(
-                                        fit: BoxFit.cover,
-                                        image: AssetImage(images[index])
-                                    )
+                                ),
+                                child: SvgPicture.asset(
+                                    images[index],
+                                    color: ColorsManager.green,
                                 ),
                               ),
                             ),

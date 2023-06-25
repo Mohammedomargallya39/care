@@ -97,6 +97,11 @@ class $AssetsImagesSvgGen {
   String get login => 'assets/images/svg/login.svg';
   String get user => 'assets/images/svg/user.svg';
   String get search => 'assets/images/svg/search.svg';
+  String get doctor => 'assets/images/svg/doctor.svg';
+  String get telescope => 'assets/images/svg/telescope.svg';
+  String get capsule => 'assets/images/svg/capsule.svg';
+  String get virus => 'assets/images/svg/virus.svg';
+  String get donate => 'assets/images/svg/donate.svg';
 
   /// List of all assets
   List<String> get values => [

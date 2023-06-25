@@ -41,21 +41,9 @@ class ScheduleScreen extends StatelessWidget {
                       borderRadius: BorderRadius.only(topLeft: Radius.circular(20.rSp),topRight: Radius.circular(20.rSp)),
                       gradient: const LinearGradient(colors: [Colors.blue,Colors.purple],)
                   ),
-                  child: Row(
-                    children: [
-                      Padding(
-                        padding: EdgeInsets.only(left: 10.rSp),
-                        child: IconButton(
-                            onPressed: ()
-                            {
-                              Navigator.pop(context);
-                            },
-                            icon: Icon(Icons.arrow_back , color: Colors.white,size: 30.rSp,)
-                        ),
-                      ),
-                      horizontalSpace(5.w),
-                      DefaultText(title: 'Appointment List', style: Style.medium,color: ColorsManager.white,fontWeight: FontWeight.bold,fontSize: 30.rSp),
-                    ],
+                  child: Padding(
+                    padding: EdgeInsets.all(10.rSp),
+                    child: DefaultText(title: 'Appointment List', style: Style.medium,color: ColorsManager.white,fontWeight: FontWeight.bold,fontSize: 30.rSp),
                   ),
                 ),
                 verticalSpace(4.h),

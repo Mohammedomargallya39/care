@@ -10,6 +10,7 @@ import '../../../../core/util/resources/constants_manager.dart';
 import '../../../login/presentation/screens/login_screen.dart';
 import '../../domain/usecase/book_appointment_usecase.dart';
 import '../../domain/usecase/doctor_profile_usecase.dart';
+import '../../domain/usecase/get_labs_usecase.dart';
 import '../../domain/usecase/profile_usecase.dart';
 import '../screens/home_screen.dart';
 import '../screens/schedule_screen.dart';
@@ -23,6 +24,7 @@ class HomeCubit extends Cubit<HomeStates> {
   final DoctorProfileUseCase _doctorProfileUseCase;
   final BookAppointmentUseCase _appointmentUseCase;
   final GetAppointmentUseCase _getAppointmentUseCase;
+  final GetLabsUseCase _getLabsUseCase;
 
   HomeCubit({
     required ProfileUseCase profileUseCase,
@@ -30,12 +32,14 @@ class HomeCubit extends Cubit<HomeStates> {
     required DoctorProfileUseCase doctorProfileUseCase,
     required BookAppointmentUseCase appointmentUseCase,
     required GetAppointmentUseCase getAppointmentUseCase,
+    required GetLabsUseCase getLabsUseCase,
 })  :
         _profileUseCase = profileUseCase,
         _doctorUseCase = doctorUseCase,
         _doctorProfileUseCase = doctorProfileUseCase,
         _appointmentUseCase = appointmentUseCase,
         _getAppointmentUseCase = getAppointmentUseCase,
+        _getLabsUseCase = getLabsUseCase,
   super(HomeInitialState());
 
   static HomeCubit get(context) => BlocProvider.of(context);
@@ -164,14 +168,27 @@ class HomeCubit extends Cubit<HomeStates> {
 
 
   void getAppointment() async{
+
     emit(LoadingGetAppointmentState());
     final result = await _getAppointmentUseCase(const GetAppointmentParams());
-
     result.fold((failure)
     {
       emit(GetAppointmentErrorState(mapFailureToMessage(failure)));
     }, (data) async{
       emit(GetAppointmentSuccessState(data));
+    });
+  }
+
+
+
+  void getLabs() async{
+    emit(LoadingGetLabsState());
+    final result = await _getLabsUseCase(const GetLabsParams());
+    result.fold((failure)
+    {
+      emit(GetLabsErrorState(mapFailureToMessage(failure)));
+    }, (data) async{
+      emit(GetLabsSuccessState(data));
     });
   }
 

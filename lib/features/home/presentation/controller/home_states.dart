@@ -2,6 +2,7 @@
 
 import '../../domain/entities/doctor_profile_entity.dart';
 import '../../domain/entities/get_appointment_entity.dart';
+import '../../domain/entities/get_labs_entity.dart';
 import '../../domain/entities/profile_entity.dart';
 
 abstract class HomeStates{
@@ -83,4 +84,19 @@ class GetAppointmentSuccessState extends HomeStates{
   List<GetAppointmentEntity> getAppointmentEntity;
   GetAppointmentSuccessState(this.getAppointmentEntity);
 }
+
+
+class LoadingGetLabsState extends HomeStates{}
+
+class GetLabsErrorState extends HomeStates{
+  final String failure;
+
+  GetLabsErrorState(this.failure);
+}
+
+class GetLabsSuccessState extends HomeStates{
+  List<GetLabsEntity> getLabs;
+  GetLabsSuccessState(this.getLabs);
+}
+
 

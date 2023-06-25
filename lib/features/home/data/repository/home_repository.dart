@@ -3,6 +3,7 @@ import 'package:care/core/error/failures.dart';
 import 'package:care/features/home/domain/entities/get_appointment_entity.dart';
 import 'package:dartz/dartz.dart';
 import '../../domain/entities/doctor_profile_entity.dart';
+import '../../domain/entities/get_labs_entity.dart';
 import '../../domain/entities/profile_entity.dart';
 import '../../domain/repository/home_base_repository.dart';
 import '../data_source/home_remote_data_source.dart';
@@ -12,6 +13,7 @@ typedef Call = Future<List<ProfileEntity>> Function();
 typedef CallDoctorProfile = Future<List<DoctorProfileEntity>> Function();
 typedef BookAppointment = Future<void> Function();
 typedef GetAppointment = Future<List<GetAppointmentEntity>> Function();
+typedef GetLabs = Future<List<GetLabsEntity>> Function();
 
 
 class HomeRepository extends HomeBaseRepository {
@@ -131,6 +133,27 @@ class HomeRepository extends HomeBaseRepository {
   Future<Either<Failure, List<GetAppointmentEntity>>> getAppointment() async {
     return await fetchGetAppointment(() {
       return remoteDataSource.getAppointment();
+    });
+  }
+
+
+  Future<Either<Failure, List<GetLabsEntity>>> fetchGetLabs(
+      GetLabs mainMethod,
+      ) async {
+    try {
+      final profileData = await mainMethod();
+      return Right(profileData);
+    } on ServerException catch (e) {
+      return Left(ServerFailure(
+        message: e.message,
+      ));
+    }
+  }
+
+  @override
+  Future<Either<Failure, List<GetLabsEntity>>> getLabs() async {
+    return await fetchGetLabs(() {
+      return remoteDataSource.getLabs();
     });
   }
 

@@ -2,6 +2,7 @@ import 'package:dartz/dartz.dart';
 import '../../../../core/error/failures.dart';
 import '../entities/doctor_profile_entity.dart';
 import '../entities/get_appointment_entity.dart';
+import '../entities/get_labs_entity.dart';
 import '../entities/profile_entity.dart';
 
 abstract class HomeBaseRepository {
@@ -24,8 +25,9 @@ abstract class HomeBaseRepository {
     required String time,
   });
 
-
   Future<Either<Failure, List<GetAppointmentEntity>>> getAppointment();
+
+  Future<Either<Failure, List<GetLabsEntity>>> getLabs();
 
 
 }

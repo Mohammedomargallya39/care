@@ -36,201 +36,214 @@ class BookAppointmentScreen extends StatelessWidget {
 
     return Scaffold(
       backgroundColor: ColorsManager.mainColor,
-      body: SafeArea(
-        child: BlocConsumer<HomeCubit,HomeStates>(
-          listener: (context, state) {
-            if(state is DoctorProfileSuccessState)
-            {
-              result = state.doctorProfileEntity;
-              for(var i =0; i< result.length ; i++)
+      body: WillPopScope(
+        onWillPop: () async{
+          result = [];
+          homeCubit.eveningTimes =[];
+          homeCubit.morningTimes = [];
+          homeCubit.dateToday = [];
+          return false;
+        },
+        child: SafeArea(
+          child: BlocConsumer<HomeCubit,HomeStates>(
+            listener: (context, state) {
+              if(state is DoctorProfileSuccessState)
               {
-                if(result[i].date == dateNow){
-                  homeCubit.dateToday.add(result[i].date);
-                  if(int.parse(result[i].timeStart.split(':').first) <= 12){
-                    homeCubit.morningTimes.add(result[i].timeStart);
+                result = state.doctorProfileEntity;
+                for(var i =0; i< result.length ; i++)
+                {
+                  if(result[i].date == dateNow){
+                    homeCubit.dateToday.add(result[i].date);
+                    if(int.parse(result[i].timeStart.split(':').first) <= 12){
+                      homeCubit.morningTimes.add(result[i].timeStart);
+                    }
+                    if(int.parse(result[i].timeEnd.split(':').first) >= 12){
+                      homeCubit.eveningTimes.add(result[i].timeEnd);
+                    }
                   }
-                  if(int.parse(result[i].timeEnd.split(':').first) >= 12){
-                    homeCubit.eveningTimes.add(result[i].timeEnd);
-                  }
+
                 }
+
+                debugPrintFullText(homeCubit.dateToday.toString());
+                debugPrintFullText(homeCubit.morningTimes.toString());
+                debugPrintFullText(homeCubit.eveningTimes.toString());
 
               }
 
-              debugPrintFullText(homeCubit.dateToday.toString());
-              debugPrintFullText(homeCubit.morningTimes.toString());
-              debugPrintFullText(homeCubit.eveningTimes.toString());
+              if(state is SuccessBookAppointmentState)
+              {
+                designToastDialog(context: context, toast: TOAST.success,text: 'Success');
+              }
 
-            }
-
-            if(state is SuccessBookAppointmentState)
-            {
-              designToastDialog(context: context, toast: TOAST.success,text: 'Success');
-            }
-
-            if(state is ErrorBookAppointmentState)
-            {
-              designToastDialog(context: context, toast: TOAST.error,text: state.failure);
-            }
-          },
-          builder: (context, state) {
-            return  Column(
-              children: [
-                verticalSpace(2.h),
-                Container(
-                  height: 8.h,
-                  width: double.infinity,
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.only(topLeft: Radius.circular(20.rSp),topRight: Radius.circular(20.rSp)),
-                      gradient: const LinearGradient(colors: [Colors.blue,Colors.purple],)
-                  ),
-                  child: Row(
-                    children: [
-                      Padding(
-                        padding: EdgeInsets.only(left: 10.rSp),
-                        child: IconButton(
-                            onPressed: ()
-                            {
-                              Navigator.pop(context);
-                            },
-                            icon: Icon(Icons.arrow_back , color: Colors.white,size: 30.rSp,)
+              if(state is ErrorBookAppointmentState)
+              {
+                designToastDialog(context: context, toast: TOAST.error,text: state.failure);
+              }
+            },
+            builder: (context, state) {
+              return  Column(
+                children: [
+                  verticalSpace(2.h),
+                  Container(
+                    height: 8.h,
+                    width: double.infinity,
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.only(topLeft: Radius.circular(20.rSp),topRight: Radius.circular(20.rSp)),
+                        gradient: const LinearGradient(colors: [Colors.blue,Colors.purple],)
+                    ),
+                    child: Row(
+                      children: [
+                        Padding(
+                          padding: EdgeInsets.only(left: 10.rSp),
+                          child: IconButton(
+                              onPressed: ()
+                              {
+                                Navigator.pop(context);
+                                result = [];
+                                homeCubit.eveningTimes =[];
+                                homeCubit.morningTimes = [];
+                                homeCubit.dateToday = [];
+                              },
+                              icon: Icon(Icons.arrow_back , color: Colors.white,size: 30.rSp,)
+                          ),
                         ),
-                      ),
-                      horizontalSpace(5.w),
-                      DefaultText(title: 'Book Appointment', style: Style.medium,color: ColorsManager.white,fontWeight: FontWeight.bold,fontSize: 30.rSp),
-                    ],
+                        horizontalSpace(5.w),
+                        DefaultText(title: 'Book Appointment', style: Style.medium,color: ColorsManager.white,fontWeight: FontWeight.bold,fontSize: 30.rSp),
+                      ],
+                    ),
                   ),
-                ),
-                Padding(
-                  padding: EdgeInsets.all(20.rSp),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      verticalSpace(4.h),
-                      DefaultText(title:  '${DateTime.now().d},${DateTime.now().month} ${DateTime.now().year}', style: Style.small,color: ColorsManager.white,fontWeight: FontWeight.w600,fontSize: 16.rSp),
-                      verticalSpace(2.h),
-                      Row(
-                        children: [
-                          Expanded(
-                            child: InkWell(
-                              onTap: () {
-                                homeCubit.chooseAppointmentTime(true);
-                              },
-                              child: Container(
-                                height: 6.h,
-                                padding: EdgeInsets.all(5.rSp),
-                                decoration: BoxDecoration(
-                                  color: homeCubit.isMorning == true ? ColorsManager.thirdColor : ColorsManager.white,
-                                  borderRadius: BorderRadius.all(Radius.circular(10.rSp)),
-                                  border: Border.all(color: ColorsManager.thirdColor)
-                                ),
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Icon(
-                                      Icons.sunny,
-                                      color: homeCubit.isMorning == true ? ColorsManager.white : ColorsManager.thirdColor,
-                                    ),
-                                    horizontalSpace(5.w),
-                                    DefaultText(title:  'Morning', style: Style.small,
-                                        color: homeCubit.isMorning == true ? ColorsManager.white : ColorsManager.thirdColor,
-                                        fontWeight: FontWeight.w600,fontSize: 14.rSp),
-                                  ],
-                                ),
-                              ),
-                            ),
-                          ),
-                          horizontalSpace(5.w),
-                          Expanded(
-                            child: InkWell(
-                              onTap: () {
-                                homeCubit.chooseAppointmentTime(false);
-                              },
-                              child: Container(
-                                height: 6.h,
-                                padding: EdgeInsets.all(5.rSp),
-                                decoration: BoxDecoration(
-                                    color: homeCubit.isMorning == true ? ColorsManager.white : ColorsManager.thirdColor,
-                                  borderRadius: BorderRadius.all(Radius.circular(10.rSp)),
-                                  border: Border.all(color: ColorsManager.thirdColor)
-                                ),
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Icon(
-                                      Icons.dark_mode,
-                                      color: homeCubit.isMorning == true ? ColorsManager.thirdColor : ColorsManager.white,
-                                    ),
-                                    horizontalSpace(5.w),
-                                    DefaultText(title:  'Evening', style: Style.small,
-                                        color: homeCubit.isMorning == true ? ColorsManager.thirdColor : ColorsManager.white,
-                                        fontWeight: FontWeight.w600,fontSize: 14.rSp),
-                                  ],
-                                ),
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                      verticalSpace(4.h),
-                      DefaultText(title:  'Choose the Hour', style: Style.small,color: ColorsManager.white,fontWeight: FontWeight.w600,fontSize: 16.rSp),
-                      verticalSpace(2.h),
-                      SizedBox(
-                        height: 30.h,
-                        child: GridView.count(
-                          physics: const BouncingScrollPhysics(),
-                          crossAxisCount: 3,
-                          crossAxisSpacing: 15.w,
-                          mainAxisSpacing: 1.h,
-                          shrinkWrap: true,
-                          children: List.generate(homeCubit.isMorning == true ? homeCubit.morningTimes.length: homeCubit.eveningTimes.length, (index)
-                          {
-                            return InkWell(
+                  Padding(
+                    padding: EdgeInsets.all(20.rSp),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        verticalSpace(4.h),
+                        DefaultText(title:  '${DateTime.now().d},${DateTime.now().month} ${DateTime.now().year}', style: Style.small,color: ColorsManager.white,fontWeight: FontWeight.w600,fontSize: 16.rSp),
+                        verticalSpace(2.h),
+                        Row(
+                          children: [
+                            Expanded(
+                              child: InkWell(
                                 onTap: () {
-                                  {
-                                    homeCubit.pressedIndex = index;
-                                    homeCubit.selectedTime(true);
-                                    timeAppointment = homeCubit.isMorning == true ? homeCubit.morningTimes [index]: homeCubit.eveningTimes [index];
-                                  }
+                                  homeCubit.chooseAppointmentTime(true);
                                 },
                                 child: Container(
-                                padding: EdgeInsets.all(5.rSp),
-                                decoration: BoxDecoration(
-                                    color: homeCubit.pressedIndex == index ? ColorsManager.thirdColor: ColorsManager.white,
+                                  height: 6.h,
+                                  padding: EdgeInsets.all(5.rSp),
+                                  decoration: BoxDecoration(
+                                    color: homeCubit.isMorning == true ? ColorsManager.thirdColor : ColorsManager.white,
                                     borderRadius: BorderRadius.all(Radius.circular(10.rSp)),
                                     border: Border.all(color: ColorsManager.thirdColor)
-                                ),
-                                child: Center(child: DefaultText(
-                                    title:  homeCubit.isMorning == true ? '${homeCubit.morningTimes [index]} AM': '${homeCubit.eveningTimes [index]} PM',
-                                    style: Style.small,
-                                    color: homeCubit.pressedIndex == index ? ColorsManager.white : ColorsManager.thirdColor,
-                                    fontWeight: FontWeight.w600,
-                                    fontSize: 12.rSp)
+                                  ),
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Icon(
+                                        Icons.sunny,
+                                        color: homeCubit.isMorning == true ? ColorsManager.white : ColorsManager.thirdColor,
+                                      ),
+                                      horizontalSpace(5.w),
+                                      DefaultText(title:  'Morning', style: Style.small,
+                                          color: homeCubit.isMorning == true ? ColorsManager.white : ColorsManager.thirdColor,
+                                          fontWeight: FontWeight.w600,fontSize: 14.rSp),
+                                    ],
+                                  ),
                                 ),
                               ),
-                            );
-                          }),
+                            ),
+                            horizontalSpace(5.w),
+                            Expanded(
+                              child: InkWell(
+                                onTap: () {
+                                  homeCubit.chooseAppointmentTime(false);
+                                },
+                                child: Container(
+                                  height: 6.h,
+                                  padding: EdgeInsets.all(5.rSp),
+                                  decoration: BoxDecoration(
+                                      color: homeCubit.isMorning == true ? ColorsManager.white : ColorsManager.thirdColor,
+                                    borderRadius: BorderRadius.all(Radius.circular(10.rSp)),
+                                    border: Border.all(color: ColorsManager.thirdColor)
+                                  ),
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Icon(
+                                        Icons.dark_mode,
+                                        color: homeCubit.isMorning == true ? ColorsManager.thirdColor : ColorsManager.white,
+                                      ),
+                                      horizontalSpace(5.w),
+                                      DefaultText(title:  'Evening', style: Style.small,
+                                          color: homeCubit.isMorning == true ? ColorsManager.thirdColor : ColorsManager.white,
+                                          fontWeight: FontWeight.w600,fontSize: 14.rSp),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
                         ),
-                      ),
-                      Center(child: Image.asset(Assets.images.png.logo,height: 18.h,width: 20.w,)),
-                      DefaultButton(
-                          text: 'Book',
-                          color: ColorsManager.secondary,
-                          onPressed: ()
-                          {
-                            homeCubit.bookAppointment(
-                                id: id,
-                                date: dateNow,
-                                time: timeAppointment!,
-                            );
-                          },
-                      ),
-                    ],
-                  ),
-                )
-              ],
-            );
-          },
+                        verticalSpace(4.h),
+                        DefaultText(title:  'Choose the Hour', style: Style.small,color: ColorsManager.white,fontWeight: FontWeight.w600,fontSize: 16.rSp),
+                        verticalSpace(2.h),
+                        SizedBox(
+                          height: 30.h,
+                          child: GridView.count(
+                            physics: const BouncingScrollPhysics(),
+                            crossAxisCount: 3,
+                            crossAxisSpacing: 15.w,
+                            mainAxisSpacing: 1.h,
+                            shrinkWrap: true,
+                            children: List.generate(homeCubit.isMorning == true ? homeCubit.morningTimes.length: homeCubit.eveningTimes.length, (index)
+                            {
+                              return InkWell(
+                                  onTap: () {
+                                    {
+                                      homeCubit.pressedIndex = index;
+                                      homeCubit.selectedTime(true);
+                                      timeAppointment = homeCubit.isMorning == true ? homeCubit.morningTimes [index]: homeCubit.eveningTimes [index];
+                                    }
+                                  },
+                                  child: Container(
+                                  padding: EdgeInsets.all(5.rSp),
+                                  decoration: BoxDecoration(
+                                      color: homeCubit.pressedIndex == index ? ColorsManager.thirdColor: ColorsManager.white,
+                                      borderRadius: BorderRadius.all(Radius.circular(10.rSp)),
+                                      border: Border.all(color: ColorsManager.thirdColor)
+                                  ),
+                                  child: Center(child: DefaultText(
+                                      title:  homeCubit.isMorning == true ? '${homeCubit.morningTimes [index]} AM': '${homeCubit.eveningTimes [index]} PM',
+                                      style: Style.small,
+                                      color: homeCubit.pressedIndex == index ? ColorsManager.white : ColorsManager.thirdColor,
+                                      fontWeight: FontWeight.w600,
+                                      fontSize: 12.rSp)
+                                  ),
+                                ),
+                              );
+                            }),
+                          ),
+                        ),
+                        Center(child: Image.asset(Assets.images.png.logo,height: 18.h,width: 20.w,)),
+                        DefaultButton(
+                            text: 'Book',
+                            color: ColorsManager.secondary,
+                            onPressed: ()
+                            {
+                              homeCubit.bookAppointment(
+                                  id: id,
+                                  date: dateNow,
+                                  time: timeAppointment!,
+                              );
+                            },
+                        ),
+                      ],
+                    ),
+                  )
+                ],
+              );
+            },
 
+          ),
         ),
       ),
     );

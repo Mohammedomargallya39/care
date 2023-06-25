@@ -5,6 +5,7 @@ import 'package:dio/dio.dart';
 
 import '../../../../core/network/remote/dio_helper.dart';
 import '../models/doctor_profile_model.dart';
+import '../models/get_labs_model.dart';
 import '../models/profile_model.dart';
 
 abstract class HomeBaseDataSource {
@@ -29,6 +30,8 @@ abstract class HomeBaseDataSource {
   });
 
   Future <List<GetAppointmentModel>> getAppointment();
+
+  Future <List<GetLabsModel>> getLabs();
 }
 
 class HomeDataSourceImpl implements HomeBaseDataSource {
@@ -114,6 +117,19 @@ class HomeDataSourceImpl implements HomeBaseDataSource {
         }
     );
 
+  }
+
+
+
+  @override
+  Future<List<GetLabsModel>> getLabs() async
+  {
+    final Response f = await dioHelper.get(
+      url: labs,
+      token: token,
+    );
+    return List<GetLabsModel>.from(
+        (f.data['results'] as List).map((e) => GetLabsModel.fromJson(e)));
   }
 
 }

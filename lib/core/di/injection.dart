@@ -1,6 +1,7 @@
 import 'package:care/features/home/domain/usecase/doctor_profile_usecase.dart';
 import 'package:care/features/home/domain/usecase/doctor_usecase.dart';
 import 'package:care/features/home/domain/usecase/get_appointment_usecase.dart';
+import 'package:care/features/home/domain/usecase/get_labs_usecase.dart';
 import 'package:care/features/home/domain/usecase/profile_usecase.dart';
 import 'package:get_it/get_it.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -42,6 +43,7 @@ Future<void> init() async {
     doctorProfileUseCase: sl(),
     appointmentUseCase: sl(),
     getAppointmentUseCase: sl(),
+    getLabsUseCase: sl(),
 
   ));
   sl.registerLazySingleton<Repository>(
@@ -72,6 +74,7 @@ Future<void> init() async {
   sl.registerLazySingleton(() => DoctorProfileUseCase(sl()));
   sl.registerLazySingleton(() => BookAppointmentUseCase(sl()));
   sl.registerLazySingleton(() => GetAppointmentUseCase(sl()));
+  sl.registerLazySingleton(() => GetLabsUseCase(sl()));
 
   //Data sources
   sl.registerLazySingleton<LogInBaseRemoteDataSource>(
