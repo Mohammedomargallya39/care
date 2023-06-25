@@ -1,5 +1,6 @@
 import 'package:care/core/network/remote/api_endpoints.dart';
 import 'package:care/core/util/resources/constants_manager.dart';
+import 'package:care/features/home/data/models/ai_result_model.dart';
 import 'package:care/features/home/data/models/alzahimer_model.dart';
 import 'package:care/features/home/data/models/blood_check_model.dart';
 import 'package:care/features/home/data/models/get_appointment_model.dart';
@@ -72,6 +73,11 @@ abstract class HomeBaseDataSource {
     required int mMSE,
     required int nWBV,
     required int aSF,
+  });
+
+
+  Future <AiResultsModel> aiResults({
+    required int id,
   });
 
 
@@ -270,6 +276,19 @@ class HomeDataSourceImpl implements HomeBaseDataSource {
         }
     );
     return AlzahimarCheckModel.fromJson(f.data);
+  }
+
+
+  @override
+  Future<AiResultsModel> aiResults({
+    required int id,
+  }) async
+  {
+    final Response f = await dioHelper.get(
+        url: '$registerEndPoint$id/MlModelsResults/',
+        token: token,
+    );
+    return AiResultsModel.fromJson(f.data);
   }
 
 

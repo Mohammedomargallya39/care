@@ -4,6 +4,7 @@ import 'package:care/features/home/domain/entities/alzhaimer_entity.dart';
 import 'package:care/features/home/domain/entities/blood_check_entity.dart';
 import 'package:care/features/home/domain/entities/get_appointment_entity.dart';
 import 'package:dartz/dartz.dart';
+import '../../domain/entities/ai_result_entity.dart';
 import '../../domain/entities/doctor_profile_entity.dart';
 import '../../domain/entities/get_labs_entity.dart';
 import '../../domain/entities/heart_entity.dart';
@@ -18,6 +19,7 @@ typedef BookAppointment = Future<void> Function();
 typedef BloodCheck = Future<BloodCheckEntity> Function();
 typedef HeartCheck = Future<HeartCheckEntity> Function();
 typedef AlzhaimerCheck = Future<AlzahimarCheckEntity> Function();
+typedef AiResult = Future<AiResultsEntity> Function();
 typedef GetAppointment = Future<List<GetAppointmentEntity>> Function();
 typedef GetLabs = Future<List<GetLabsEntity>> Function();
 
@@ -281,6 +283,32 @@ class HomeRepository extends HomeBaseRepository {
         mMSE: mMSE,
         nWBV: nWBV,
         aSF: aSF,
+      );
+    });
+  }
+
+
+  @override
+  Future<Either<Failure, AiResultsEntity>> fetchAlResult(
+      AiResult mainMethod,
+      ) async {
+    try {
+      final profileData = await mainMethod();
+      return Right(profileData);
+    } on ServerException catch (e) {
+      return Left(ServerFailure(
+        message: e.message,
+      ));
+    }
+  }
+
+  @override
+  Future<Either<Failure, AiResultsEntity>> aiResults({
+    required int id,
+  }) async {
+    return await fetchAlResult(() {
+      return remoteDataSource.aiResults(
+        id: id,
       );
     });
   }

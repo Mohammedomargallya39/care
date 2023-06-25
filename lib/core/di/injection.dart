@@ -1,3 +1,4 @@
+import 'package:care/features/home/domain/usecase/ai_result_usecase.dart';
 import 'package:care/features/home/domain/usecase/alzahimar_usecase.dart';
 import 'package:care/features/home/domain/usecase/doctor_profile_usecase.dart';
 import 'package:care/features/home/domain/usecase/doctor_usecase.dart';
@@ -50,6 +51,7 @@ Future<void> init() async {
     bloodCheckUseCase: sl(),
     heartCheckUseCase: sl(),
     alzahimarCheckUseCase: sl(),
+    aiResultsUseCase: sl(),
 
   ));
   sl.registerLazySingleton<Repository>(
@@ -84,6 +86,7 @@ Future<void> init() async {
   sl.registerLazySingleton(() => BloodCheckUseCase(sl()));
   sl.registerLazySingleton(() => HeartCheckUseCase(sl()));
   sl.registerLazySingleton(() => AlzahimarCheckUseCase(sl()));
+  sl.registerLazySingleton(() => AiResultsUseCase(sl()));
 
   //Data sources
   sl.registerLazySingleton<LogInBaseRemoteDataSource>(

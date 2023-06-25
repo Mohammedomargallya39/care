@@ -128,7 +128,6 @@ class HomeScreen extends StatelessWidget {
                                 ),
                                 child: SvgPicture.asset(
                                     images[index],
-                                    color: ColorsManager.green,
                                 ),
                               ),
                             ),
@@ -137,6 +136,9 @@ class HomeScreen extends StatelessWidget {
                         itemCount: 5,
                       ),
                     ),
+                    verticalSpace(5.h),
+                    Image.asset(Assets.images.png.card)
+
 
 
                   ],

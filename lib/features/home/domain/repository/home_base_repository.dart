@@ -1,5 +1,6 @@
 import 'package:dartz/dartz.dart';
 import '../../../../core/error/failures.dart';
+import '../entities/ai_result_entity.dart';
 import '../entities/alzhaimer_entity.dart';
 import '../entities/blood_check_entity.dart';
 import '../entities/doctor_profile_entity.dart';
@@ -68,5 +69,10 @@ abstract class HomeBaseRepository {
     required int nWBV,
     required int aSF,
   });
+
+  Future<Either<Failure, AiResultsEntity>> aiResults({
+    required int id,
+  });
+
 
 }

@@ -1,5 +1,6 @@
 
 
+import 'package:care/features/home/domain/entities/ai_result_entity.dart';
 import 'package:care/features/home/domain/entities/alzhaimer_entity.dart';
 import 'package:care/features/home/domain/entities/blood_check_entity.dart';
 
@@ -143,6 +144,20 @@ class AlzhimerTestErrorState extends HomeStates{
 class AlzhimerTestSuccessState extends HomeStates{
   AlzahimarCheckEntity alzahimarCheckEntity;
   AlzhimerTestSuccessState(this.alzahimarCheckEntity);
+}
+
+
+class LoadingAiResultsState extends HomeStates{}
+
+class AiResultsErrorState extends HomeStates{
+  final String failure;
+
+  AiResultsErrorState(this.failure);
+}
+
+class AiResultsSuccessState extends HomeStates{
+  AiResultsEntity aiResultsEntity;
+  AiResultsSuccessState(this.aiResultsEntity);
 }
 
 

@@ -81,10 +81,14 @@ class $AssetsImagesPngGen {
   /// File path: assets/images/png/virusButton.png
   String get virusButton => 'assets/images/png/virus_button.png';
 
+  /// File path: assets/images/png/card.png
+  String get card => 'assets/images/png/card.png';
+
   /// List of all assets
   List<String> get values => [
     up,
-    hi
+    hi,
+    card
   ];
 }
 

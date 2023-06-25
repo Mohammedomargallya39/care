@@ -1,3 +1,4 @@
+import 'package:care/features/home/domain/usecase/ai_result_usecase.dart';
 import 'package:care/features/home/domain/usecase/blood_check_usecase.dart';
 import 'package:care/features/home/domain/usecase/doctor_usecase.dart';
 import 'package:care/features/home/domain/usecase/get_appointment_usecase.dart';
@@ -31,6 +32,7 @@ class HomeCubit extends Cubit<HomeStates> {
   final BloodCheckUseCase _bloodCheckUseCase;
   final HeartCheckUseCase _heartCheckUseCase;
   final AlzahimarCheckUseCase _alzahimarCheckUseCase;
+  final AiResultsUseCase _aiResultsUseCase;
 
   HomeCubit({
     required ProfileUseCase profileUseCase,
@@ -42,6 +44,7 @@ class HomeCubit extends Cubit<HomeStates> {
     required BloodCheckUseCase bloodCheckUseCase,
     required HeartCheckUseCase heartCheckUseCase,
     required AlzahimarCheckUseCase alzahimarCheckUseCase,
+    required AiResultsUseCase aiResultsUseCase,
 })  :
         _profileUseCase = profileUseCase,
         _doctorUseCase = doctorUseCase,
@@ -52,6 +55,7 @@ class HomeCubit extends Cubit<HomeStates> {
         _bloodCheckUseCase = bloodCheckUseCase,
         _heartCheckUseCase = heartCheckUseCase,
         _alzahimarCheckUseCase =alzahimarCheckUseCase,
+        _aiResultsUseCase = aiResultsUseCase,
   super(HomeInitialState());
 
   static HomeCubit get(context) => BlocProvider.of(context);
@@ -60,7 +64,7 @@ class HomeCubit extends Cubit<HomeStates> {
   List<Widget> widgets = [
     const HomeScreen(),
     const ScheduleScreen(),
-    const SectionScreen(),
+    const HistoryAIResultsScreen(),
     const ProfileScreen(),
   ];
 
@@ -333,6 +337,25 @@ class HomeCubit extends Cubit<HomeStates> {
       emit(AlzhimerTestSuccessState(data));
     });
   }
+
+
+  void aiResults({
+    required int id,
+  }) async{
+    emit(LoadingAiResultsState());
+    final result = await _aiResultsUseCase( AiResultsParams(
+      id: id,
+    ));
+
+    result.fold((failure)
+    {
+      emit(AiResultsErrorState(mapFailureToMessage(failure)));
+    }, (data) async{
+      emit(AiResultsSuccessState(data));
+    });
+  }
+
+
 
 
 

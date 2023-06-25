@@ -55,7 +55,7 @@ class AlzahimerCheckScreen extends StatelessWidget {
                             {
                               Navigator.pop(context);
                             }, icon:const Icon( Icons.arrow_back,color: ColorsManager.white,)),
-                            DefaultText(title: 'Alzhimar Check', style: Style.medium,color: ColorsManager.white,fontWeight: FontWeight.bold,fontSize: 30.rSp),
+                            DefaultText(title: 'Alzheimer Check', style: Style.medium,color: ColorsManager.white,fontWeight: FontWeight.bold,fontSize: 30.rSp),
                           ],
                         ),
                       ),
