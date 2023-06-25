@@ -24,7 +24,7 @@ class HeartCheckScreen extends StatelessWidget {
         listener: (context, state) {
           if(state is HeartTestSuccessState)
           {
-            designToastDialog(context: context, toast: TOAST.success, text: state.heartCheckEntity.toString().replaceAll('HeartCheckModel', ''));
+            designToastDialog(context: context, toast: TOAST.success, text: 'For result Go to Report Screen');
           }
           if(state is HeartTestErrorState)
           {

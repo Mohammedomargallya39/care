@@ -24,7 +24,7 @@ class AlzahimerCheckScreen extends StatelessWidget {
         listener: (context, state) {
           if(state is AlzhimerTestSuccessState)
           {
-            designToastDialog(context: context, toast: TOAST.success, text: state.alzahimarCheckEntity.toString().replaceAll('AlzahimarCheckModel', ''));
+            designToastDialog(context: context, toast: TOAST.success, text: 'For result Go to Report Screen');
           }
           if(state is AlzhimerTestErrorState)
           {

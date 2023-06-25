@@ -24,7 +24,8 @@ class BloodCancerCheckScreen extends StatelessWidget {
         listener: (context, state) {
           if(state is BloodTestSuccessState)
           {
-            designToastDialog(context: context, toast: TOAST.success, text: state.bloodCheckEntity.toString().replaceAll('BloodCheckModel', ''));
+            designToastDialog(context: context, toast: TOAST.success, text: 'For result Go to Report Screen');
+            debugPrintFullText(state.bloodCheckEntity.toString());
           }
           if(state is BloodTestErrorState)
           {
