@@ -42,6 +42,7 @@ class BookAppointmentScreen extends StatelessWidget {
           homeCubit.eveningTimes =[];
           homeCubit.morningTimes = [];
           homeCubit.dateToday = [];
+          Navigator.pop(context);
           return false;
         },
         child: SafeArea(

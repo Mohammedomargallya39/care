@@ -1,3 +1,4 @@
+import 'package:care/features/home/domain/usecase/blood_check_usecase.dart';
 import 'package:care/features/home/domain/usecase/doctor_usecase.dart';
 import 'package:care/features/home/domain/usecase/get_appointment_usecase.dart';
 import 'package:care/features/home/presentation/screens/profile_screen.dart';
@@ -8,9 +9,11 @@ import '../../../../core/error/failures.dart';
 import '../../../../core/network/local/cache_helper.dart';
 import '../../../../core/util/resources/constants_manager.dart';
 import '../../../login/presentation/screens/login_screen.dart';
+import '../../domain/usecase/alzahimar_usecase.dart';
 import '../../domain/usecase/book_appointment_usecase.dart';
 import '../../domain/usecase/doctor_profile_usecase.dart';
 import '../../domain/usecase/get_labs_usecase.dart';
+import '../../domain/usecase/heart_usecase.dart';
 import '../../domain/usecase/profile_usecase.dart';
 import '../screens/home_screen.dart';
 import '../screens/schedule_screen.dart';
@@ -25,6 +28,9 @@ class HomeCubit extends Cubit<HomeStates> {
   final BookAppointmentUseCase _appointmentUseCase;
   final GetAppointmentUseCase _getAppointmentUseCase;
   final GetLabsUseCase _getLabsUseCase;
+  final BloodCheckUseCase _bloodCheckUseCase;
+  final HeartCheckUseCase _heartCheckUseCase;
+  final AlzahimarCheckUseCase _alzahimarCheckUseCase;
 
   HomeCubit({
     required ProfileUseCase profileUseCase,
@@ -33,6 +39,9 @@ class HomeCubit extends Cubit<HomeStates> {
     required BookAppointmentUseCase appointmentUseCase,
     required GetAppointmentUseCase getAppointmentUseCase,
     required GetLabsUseCase getLabsUseCase,
+    required BloodCheckUseCase bloodCheckUseCase,
+    required HeartCheckUseCase heartCheckUseCase,
+    required AlzahimarCheckUseCase alzahimarCheckUseCase,
 })  :
         _profileUseCase = profileUseCase,
         _doctorUseCase = doctorUseCase,
@@ -40,6 +49,9 @@ class HomeCubit extends Cubit<HomeStates> {
         _appointmentUseCase = appointmentUseCase,
         _getAppointmentUseCase = getAppointmentUseCase,
         _getLabsUseCase = getLabsUseCase,
+        _bloodCheckUseCase = bloodCheckUseCase,
+        _heartCheckUseCase = heartCheckUseCase,
+        _alzahimarCheckUseCase =alzahimarCheckUseCase,
   super(HomeInitialState());
 
   static HomeCubit get(context) => BlocProvider.of(context);
@@ -189,6 +201,136 @@ class HomeCubit extends Cubit<HomeStates> {
       emit(GetLabsErrorState(mapFailureToMessage(failure)));
     }, (data) async{
       emit(GetLabsSuccessState(data));
+    });
+  }
+
+  final TextEditingController ageBlood = TextEditingController();
+  final TextEditingController bmiBlood = TextEditingController();
+  final TextEditingController glucouseBlood = TextEditingController();
+  final TextEditingController insulineBlood = TextEditingController();
+  final TextEditingController homaBlood = TextEditingController();
+  final TextEditingController leptinBlood = TextEditingController();
+  final TextEditingController adiponcetinBlood = TextEditingController();
+  final TextEditingController resistiinBlood = TextEditingController();
+  final TextEditingController mcpBlood = TextEditingController();
+
+
+  final TextEditingController ageHeart = TextEditingController();
+  final TextEditingController sexHeart = TextEditingController();
+  final TextEditingController chestPainTypeHeart = TextEditingController();
+  final TextEditingController cholesterolHeart = TextEditingController();
+  final TextEditingController fastingBSHeart = TextEditingController();
+  final TextEditingController maxHRHeart = TextEditingController();
+  final TextEditingController exerciseAnginaHeart = TextEditingController();
+  final TextEditingController oldPeakHeart = TextEditingController();
+  final TextEditingController sTSlopeHeart = TextEditingController();
+
+
+  final TextEditingController ageAlzahimer = TextEditingController();
+  final TextEditingController genderAlzahimer = TextEditingController();
+  final TextEditingController eDUCAlzahimer = TextEditingController();
+  final TextEditingController sESAlzahimer = TextEditingController();
+  final TextEditingController mMSEAlzahimer = TextEditingController();
+  final TextEditingController eTIVAlzahimer = TextEditingController();
+  final TextEditingController nWBVAlzahimer = TextEditingController();
+  final TextEditingController aSFAlzahimer = TextEditingController();
+
+
+
+  void bloodTest({
+    required int resistiin,
+    required int mcp,
+    required int leptin,
+    required int insuline,
+    required int homa,
+    required int glucouse,
+    required int bmi,
+    required int adiponcetin,
+    required int age,
+}) async{
+    emit(LoadingBloodTestState());
+    final result = await _bloodCheckUseCase( BloodCheckParams(
+      resistiin: resistiin,
+      mcp: mcp,
+      leptin: leptin,
+      insuline: insuline,
+      homa: homa,
+      glucouse: glucouse,
+      bmi: bmi,
+      adiponcetin: adiponcetin,
+      age: age,
+    ));
+
+    result.fold((failure)
+    {
+      emit(BloodTestErrorState(mapFailureToMessage(failure)));
+    }, (data) async{
+      emit(BloodTestSuccessState(data));
+    });
+  }
+
+
+
+  void heartTest({
+    required int age,
+    required int sex,
+    required int chestPainType,
+    required int cholesterol,
+    required int fastingBS,
+    required int exerciseAngina,
+    required int maxHR,
+    required int oldpeak,
+    required int sT_Slope,
+  }) async{
+    emit(LoadingHeartTestState());
+    final result = await _heartCheckUseCase( HeartCheckParams(
+      sex: sex,
+      chestPainType: chestPainType,
+      cholesterol: cholesterol,
+      fastingBS: fastingBS,
+      exerciseAngina: exerciseAngina,
+      maxHR: maxHR,
+      oldpeak: oldpeak,
+      sT_Slope: sT_Slope,
+      age: age,
+    ));
+
+    result.fold((failure)
+    {
+      emit(HeartTestErrorState(mapFailureToMessage(failure)));
+    }, (data) async{
+      emit(HeartTestSuccessState(data));
+    });
+  }
+
+
+  void alzahimerTest({
+    required int age,
+    required int gender,
+    required int eDUC,
+    required int sES,
+    required int eTIV,
+    required int mMSE,
+    required int nWBV,
+    required int aSF,
+  }) async{
+    emit(LoadingAlzhimerTestState());
+    final result = await _alzahimarCheckUseCase( AlzahimarCheckParams(
+      gender: gender,
+      eDUC: eDUC,
+      sES: sES,
+      eTIV: eTIV,
+      mMSE: mMSE,
+      nWBV: nWBV,
+      aSF: aSF,
+      age: age,
+    ));
+
+    result.fold((failure)
+    {
+      emit(AlzhimerTestErrorState(mapFailureToMessage(failure)));
+    }, (data) async{
+      emit(AlzhimerTestSuccessState(data));
     });
   }
 

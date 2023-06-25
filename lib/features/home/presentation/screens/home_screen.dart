@@ -4,6 +4,7 @@ import 'package:care/core/util/resources/extensions_manager.dart';
 import 'package:care/core/util/widgets/default_text.dart';
 import 'package:care/core/util/widgets/default_text_field.dart';
 import 'package:care/core/util/widgets/loadingPage.dart';
+import 'package:care/features/home/presentation/screens/blood_cancer_check_screen.dart';
 import 'package:care/features/home/presentation/screens/doctors_screen.dart';
 import 'package:care/features/home/presentation/screens/labs_screen.dart';
 import 'package:flutter/material.dart';
@@ -13,6 +14,8 @@ import '../../../../core/util/resources/assets.gen.dart';
 import '../../domain/entities/profile_entity.dart';
 import '../controller/home_cubit.dart';
 import '../controller/home_states.dart';
+import 'alzahimer_check.dart';
+import 'heart_check.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -81,7 +84,7 @@ class HomeScreen extends StatelessWidget {
                         )
                       ],
                     ),
-                    verticalSpace(10.h),
+                    verticalSpace(5.h),
                     DefaultText(title: 'Service', style: Style.medium , color: ColorsManager.white,fontWeight: FontWeight.w600,fontSize: 30.rSp,align: TextAlign.start),
                     verticalSpace(1.h),
                     SizedBox(
@@ -99,6 +102,18 @@ class HomeScreen extends StatelessWidget {
                               if(index == 1)
                               {
                                 navigateTo(context, const LabsScreen());
+                              }
+                              if(index == 2)
+                              {
+                                navigateTo(context, BloodCancerCheckScreen());
+                              }
+                              if(index == 3)
+                              {
+                                navigateTo(context, HeartCheckScreen());
+                              }
+                              if(index == 4)
+                              {
+                                navigateTo(context, AlzahimerCheckScreen());
                               }
                             },
                             child: Padding(

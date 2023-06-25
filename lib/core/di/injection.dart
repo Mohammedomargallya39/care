@@ -1,3 +1,4 @@
+import 'package:care/features/home/domain/usecase/alzahimar_usecase.dart';
 import 'package:care/features/home/domain/usecase/doctor_profile_usecase.dart';
 import 'package:care/features/home/domain/usecase/doctor_usecase.dart';
 import 'package:care/features/home/domain/usecase/get_appointment_usecase.dart';
@@ -8,7 +9,9 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../../features/home/data/data_source/home_remote_data_source.dart';
 import '../../features/home/data/repository/home_repository.dart';
 import '../../features/home/domain/repository/home_base_repository.dart';
+import '../../features/home/domain/usecase/blood_check_usecase.dart';
 import '../../features/home/domain/usecase/book_appointment_usecase.dart';
+import '../../features/home/domain/usecase/heart_usecase.dart';
 import '../../features/home/presentation/controller/home_cubit.dart';
 import '../../features/login/data/data_source/login_remote_data_source.dart';
 import '../../features/login/data/repository/login_repository.dart';
@@ -44,6 +47,9 @@ Future<void> init() async {
     appointmentUseCase: sl(),
     getAppointmentUseCase: sl(),
     getLabsUseCase: sl(),
+    bloodCheckUseCase: sl(),
+    heartCheckUseCase: sl(),
+    alzahimarCheckUseCase: sl(),
 
   ));
   sl.registerLazySingleton<Repository>(
@@ -75,6 +81,9 @@ Future<void> init() async {
   sl.registerLazySingleton(() => BookAppointmentUseCase(sl()));
   sl.registerLazySingleton(() => GetAppointmentUseCase(sl()));
   sl.registerLazySingleton(() => GetLabsUseCase(sl()));
+  sl.registerLazySingleton(() => BloodCheckUseCase(sl()));
+  sl.registerLazySingleton(() => HeartCheckUseCase(sl()));
+  sl.registerLazySingleton(() => AlzahimarCheckUseCase(sl()));
 
   //Data sources
   sl.registerLazySingleton<LogInBaseRemoteDataSource>(
