@@ -36,7 +36,7 @@ class RegisterRemoteDataSourceImpl
           {
             'username': userName,
             'email': email,
-            'profile_picture': await MultipartFile.fromFile(
+            'profile_pic': await MultipartFile.fromFile(
               profilePicture.path,
               filename: Uri.file(profilePicture.path).pathSegments.last,
             ),
