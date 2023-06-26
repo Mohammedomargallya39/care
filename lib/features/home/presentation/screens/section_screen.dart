@@ -50,7 +50,9 @@ class HistoryAIResultsScreen extends StatelessWidget {
                   if(results != null)
                   Column(
                     children: [
+                      if(results!.bloodTest != null)
                       verticalSpace(4.h),
+                      if(results!.bloodTest != null)
                       Padding(
                         padding: EdgeInsets.all(10.rSp),
                         child: Card(
@@ -71,67 +73,67 @@ class HistoryAIResultsScreen extends StatelessWidget {
                             // contents
                             children: [
                               DefaultText(
-                                title: 'Patient Name: ${results!.bloodTest.patient_username}',
+                                title: 'Patient Name: ${results!.bloodTest!.patient_username}',
                                 style: Style.small,
                                 color: ColorsManager.white,
                                 fontSize: 18.rSp,
                               ),
                               DefaultText(
-                                title: 'Age: ${results!.bloodTest.age}',
+                                title: 'Age: ${results!.bloodTest!.age}',
                                 style: Style.small,
                                 color: ColorsManager.white,
                                 fontSize: 18.rSp,
                               ),
                               DefaultText(
-                                title: 'BMI: ${results!.bloodTest.bmi}',
+                                title: 'BMI: ${results!.bloodTest!.bmi}',
                                 style: Style.small,
                                 color: ColorsManager.white,
                                 fontSize: 18.rSp,
                               ),
                               DefaultText(
-                                title: 'Glucouse: ${results!.bloodTest.glucouse}',
+                                title: 'Glucouse: ${results!.bloodTest!.glucouse}',
                                 style: Style.small,
                                 color: ColorsManager.white,
                                 fontSize: 18.rSp,
                               ),
                               DefaultText(
-                                title: 'Insuline: ${results!.bloodTest.insuline}',
+                                title: 'Insuline: ${results!.bloodTest!.insuline}',
                                 style: Style.small,
                                 color: ColorsManager.white,
                                 fontSize: 18.rSp,
                               ),
                               DefaultText(
-                                title: 'Homa: ${results!.bloodTest.homa}',
+                                title: 'Homa: ${results!.bloodTest!.homa}',
                                 style: Style.small,
                                 color: ColorsManager.white,
                                 fontSize: 18.rSp,
                               ),
                               DefaultText(
-                                title: 'Leptin: ${results!.bloodTest.leptin}',
+                                title: 'Leptin: ${results!.bloodTest!.leptin}',
                                 style: Style.small,
                                 color: ColorsManager.white,
                                 fontSize: 18.rSp,
                               ),
                               DefaultText(
-                                title: 'Adiponcetin: ${results!.bloodTest.adiponcetin}',
+                                title: 'Adiponcetin: ${results!.bloodTest!.adiponcetin}',
                                 style: Style.small,
                                 color: ColorsManager.white,
                                 fontSize: 18.rSp,
                               ),
                               DefaultText(
-                                title: 'MCP: ${results!.bloodTest.mcp}',
+                                title: 'MCP: ${results!.bloodTest!.mcp}',
                                 style: Style.small,
                                 color: ColorsManager.white,
                                 fontSize: 18.rSp,
                               ),
                               DefaultText(
-                                title: 'date: ${results!.bloodTest.date}',
+                                title: 'date: ${results!.bloodTest!.date}',
                                 style: Style.small,
                                 color: ColorsManager.white,
                                 fontSize: 18.rSp,
                               ),
                               DefaultText(
-                                title: 'result: ${results!.bloodTest.result}',
+                                title: 'result: ${results!.bloodTest!.result}',
                                 style: Style.small,
                                 color: ColorsManager.white,
                                 fontSize: 18.rSp,
@@ -141,8 +143,11 @@ class HistoryAIResultsScreen extends StatelessWidget {
                         ),
                       ),
 
-                      verticalSpace(4.h),
-                      Padding(
+
+                      if(results!.heartTest != null)
+                        verticalSpace(4.h),
+                      if(results!.heartTest != null)
+                        Padding(
                         padding: EdgeInsets.all(10.rSp),
                         child: Card(
                           color: ColorsManager.secondryColor,
@@ -162,73 +167,73 @@ class HistoryAIResultsScreen extends StatelessWidget {
                             // contents
                             children: [
                               DefaultText(
-                                title: 'Patient Name: ${results!.heartTest.patient_username}',
+                                title: 'Patient Name: ${results!.heartTest!.patient_username}',
                                 style: Style.small,
                                 color: ColorsManager.white,
                                 fontSize: 18.rSp,
                               ),
                               DefaultText(
-                                title: 'Age:  ${results!.heartTest.age}',
+                                title: 'Age:  ${results!.heartTest!.age}',
                                 style: Style.small,
                                 color: ColorsManager.white,
                                 fontSize: 18.rSp,
                               ),
                               DefaultText(
-                                title: 'Sex:  ${results!.heartTest.sex}',
+                                title: 'Sex:  ${results!.heartTest!.sex}',
                                 style: Style.small,
                                 color: ColorsManager.white,
                                 fontSize: 18.rSp,
                               ),
                               DefaultText(
-                                title: 'Chest Pain:  ${results!.heartTest.chestPainType}',
+                                title: 'Chest Pain:  ${results!.heartTest!.chestPainType}',
                                 style: Style.small,
                                 color: ColorsManager.white,
                                 fontSize: 18.rSp,
                               ),
                               DefaultText(
-                                title: 'Cholesterol:  ${results!.heartTest.cholesterol}',
+                                title: 'Cholesterol:  ${results!.heartTest!.cholesterol}',
                                 style: Style.small,
                                 color: ColorsManager.white,
                                 fontSize: 18.rSp,
                               ),
                               DefaultText(
-                                title: 'Fasting BS:  ${results!.heartTest.fastingBS}',
+                                title: 'Fasting BS:  ${results!.heartTest!.fastingBS}',
                                 style: Style.small,
                                 color: ColorsManager.white,
                                 fontSize: 18.rSp,
                               ),
                               DefaultText(
-                                title: 'Max HR:  ${results!.heartTest.maxHR}',
+                                title: 'Max HR:  ${results!.heartTest!.maxHR}',
                                 style: Style.small,
                                 color: ColorsManager.white,
                                 fontSize: 18.rSp,
                               ),
                               DefaultText(
-                                title: 'Exercise Angina:  ${results!.heartTest.exerciseAngina}',
+                                title: 'Exercise Angina:  ${results!.heartTest!.exerciseAngina}',
                                 style: Style.small,
                                 color: ColorsManager.white,
                                 fontSize: 18.rSp,
                               ),
                               DefaultText(
-                                title: 'Old Peak:  ${results!.heartTest.oldpeak}',
+                                title: 'Old Peak:  ${results!.heartTest!.oldpeak}',
                                 style: Style.small,
                                 color: ColorsManager.white,
                                 fontSize: 18.rSp,
                               ),
                               DefaultText(
-                                title: 'ST Slope:  ${results!.heartTest.sT_Slope}',
+                                title: 'ST Slope:  ${results!.heartTest!.sT_Slope}',
                                 style: Style.small,
                                 color: ColorsManager.white,
                                 fontSize: 18.rSp,
                               ),
                               DefaultText(
-                                title: 'date:  ${results!.heartTest.date}',
+                                title: 'date:  ${results!.heartTest!.date}',
                                 style: Style.small,
                                 color: ColorsManager.white,
                                 fontSize: 18.rSp,
                               ),
                               DefaultText(
-                                title: 'result:  ${results!.heartTest.result}',
+                                title: 'result:  ${results!.heartTest!.result}',
                                 style: Style.small,
                                 color: ColorsManager.white,
                                 fontSize: 18.rSp,
@@ -238,7 +243,9 @@ class HistoryAIResultsScreen extends StatelessWidget {
                         ),
                       ),
 
+                      if(results!.alzhimarTest != null)
                       verticalSpace(4.h),
+                      if(results!.alzhimarTest != null)
                       Padding(
                         padding: EdgeInsets.all(10.rSp),
                         child: Card(
@@ -259,67 +266,67 @@ class HistoryAIResultsScreen extends StatelessWidget {
                             // contents
                             children: [
                               DefaultText(
-                                title: 'Patient Name:  ${results!.alzhimarTest.patient_username}',
+                                title: 'Patient Name:  ${results!.alzhimarTest!.patient_username}',
                                 style: Style.small,
                                 color: ColorsManager.white,
                                 fontSize: 18.rSp,
                               ),
                               DefaultText(
-                                title: 'Age: ${results!.alzhimarTest.age}',
+                                title: 'Age: ${results!.alzhimarTest!.age}',
                                 style: Style.small,
                                 color: ColorsManager.white,
                                 fontSize: 18.rSp,
                               ),
                               DefaultText(
-                                title: 'Gender: ${results!.alzhimarTest.gender}',
+                                title: 'Gender: ${results!.alzhimarTest!.gender}',
                                 style: Style.small,
                                 color: ColorsManager.white,
                                 fontSize: 18.rSp,
                               ),
                               DefaultText(
-                                title: 'EDUC: ${results!.alzhimarTest.eDUC}',
+                                title: 'EDUC: ${results!.alzhimarTest!.eDUC}',
                                 style: Style.small,
                                 color: ColorsManager.white,
                                 fontSize: 18.rSp,
                               ),
                               DefaultText(
-                                title: 'SES: ${results!.alzhimarTest.sES}',
+                                title: 'SES: ${results!.alzhimarTest!.sES}',
                                 style: Style.small,
                                 color: ColorsManager.white,
                                 fontSize: 18.rSp,
                               ),
                               DefaultText(
-                                title: 'mMSE: ${results!.alzhimarTest.mMSE}',
+                                title: 'mMSE: ${results!.alzhimarTest!.mMSE}',
                                 style: Style.small,
                                 color: ColorsManager.white,
                                 fontSize: 18.rSp,
                               ),
                               DefaultText(
-                                title: 'eTIV: ${results!.alzhimarTest.eTIV}',
+                                title: 'eTIV: ${results!.alzhimarTest!.eTIV}',
                                 style: Style.small,
                                 color: ColorsManager.white,
                                 fontSize: 18.rSp,
                               ),
                               DefaultText(
-                                title: 'nWBV: ${results!.alzhimarTest.nWBV}',
+                                title: 'nWBV: ${results!.alzhimarTest!.nWBV}',
                                 style: Style.small,
                                 color: ColorsManager.white,
                                 fontSize: 18.rSp,
                               ),
                               DefaultText(
-                                title: 'ASF: ${results!.alzhimarTest.aSF}',
+                                title: 'ASF: ${results!.alzhimarTest!.aSF}',
                                 style: Style.small,
                                 color: ColorsManager.white,
                                 fontSize: 18.rSp,
                               ),
                               DefaultText(
-                                title: 'date: ${results!.alzhimarTest.date}',
+                                title: 'date: ${results!.alzhimarTest!.date}',
                                 style: Style.small,
                                 color: ColorsManager.white,
                                 fontSize: 18.rSp,
                               ),
                               DefaultText(
-                                title: 'result: ${results!.alzhimarTest.result}',
+                                title: 'result: ${results!.alzhimarTest!.result}',
                                 style: Style.small,
                                 color: ColorsManager.white,
                                 fontSize: 18.rSp,

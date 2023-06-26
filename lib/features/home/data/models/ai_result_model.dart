@@ -12,9 +12,9 @@ class AiResultsModel extends AiResultsEntity
   factory AiResultsModel.fromJson(Map<String,dynamic> json) 
   {
     return AiResultsModel(
-        alzhimarTest: AlzhimarTest.fromJson(json['alzhimarTest']),
-        bloodTest: BloodTest.fromJson(json['bloodTest']),
-        heartTest: HeartTest.fromJson(json['heartTest']),
+        alzhimarTest: json['alzhimarTest'] == null ? null : AlzhimarTest.fromJson(json['alzhimarTest']),
+        bloodTest: json['bloodTest'] == null ? null : BloodTest.fromJson(json['bloodTest']),
+        heartTest: json['heartTest'] == null ? null : HeartTest.fromJson(json['heartTest']),
     );
   }
   

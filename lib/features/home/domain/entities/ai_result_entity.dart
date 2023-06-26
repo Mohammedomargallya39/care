@@ -2,9 +2,9 @@ import 'package:equatable/equatable.dart';
 
 class AiResultsEntity extends Equatable
 {
-  final BloodTest bloodTest;
-  final HeartTest heartTest;
-  final AlzhimarTest alzhimarTest;
+  final BloodTest? bloodTest;
+  final HeartTest? heartTest;
+  final AlzhimarTest? alzhimarTest;
 
   AiResultsEntity({
     required this.alzhimarTest,
@@ -57,19 +57,19 @@ class BloodTest extends Equatable
     factory BloodTest.fromJson(Map<String,dynamic> json)
     {
       return BloodTest(
-          resistiin: json['resistiin'],
-          mcp: json['mcp'],
-          leptin: json['leptin'],
-          insuline: json['insuline'],
-          homa: json['homa'],
-          glucouse: json['glucouse'],
-          bmi: json['bmi'],
-          adiponcetin: json['adiponcetin'],
-          result: json['result'],
-          date: json['date'],
-          id: json['id'],
-          age: json['age'],
-          patient_username: json['patient_username']
+          resistiin: json['resistiin'] ?? '',
+          mcp: json['mcp']??'',
+          leptin: json['leptin']??'',
+          insuline: json['insuline']??'',
+          homa: json['homa']??'',
+          glucouse: json['glucouse']??'',
+          bmi: json['bmi']??'',
+          adiponcetin: json['adiponcetin']??'',
+          result: json['result']??'',
+          date: json['date']??'',
+          id: json['id']??'',
+          age: json['age']??'',
+          patient_username: json['patient_username']??''
       );
     }
 
@@ -132,19 +132,19 @@ class HeartTest extends Equatable
   factory HeartTest.fromJson(Map<String,dynamic> json)
   {
     return HeartTest(
-        sex: json['Sex'],
-        chestPainType: json['ChestPainType'],
-        cholesterol: json['Cholesterol'],
-        fastingBS: json['FastingBS'],
-        maxHR: json['MaxHR'],
-        exerciseAngina: json['ExerciseAngina'],
-        oldpeak: json['Oldpeak'],
-        sT_Slope: json['ST_Slope'],
-        result: json['result'],
-        date: json['date'],
-        id: json['id'],
-        age: json['Age'],
-        patient_username: json['patient_username']
+        sex: json['Sex']??'',
+        chestPainType: json['ChestPainType']??'',
+        cholesterol: json['Cholesterol']??'',
+        fastingBS: json['FastingBS']??'',
+        maxHR: json['MaxHR']??'',
+        exerciseAngina: json['ExerciseAngina']??'',
+        oldpeak: json['Oldpeak']??'',
+        sT_Slope: json['ST_Slope']??'',
+        result: json['result']??'',
+        date: json['date']??'',
+        id: json['id']??'',
+        age: json['Age']??'',
+        patient_username: json['patient_username']??''
     );
   }
 
@@ -204,18 +204,18 @@ class AlzhimarTest extends Equatable
   factory AlzhimarTest.fromJson(Map<String,dynamic> json)
   {
     return AlzhimarTest(
-        sES: json['SES'],
-        nWBV: json['nWBV'],
-        mMSE: json['MMSE'],
-        eTIV: json['eTIV'],
-        eDUC: json['EDUC'],
-        aSF: json['ASF'],
-        gender: json['gender'],
-        result: json['result'],
-        date: json['date'],
-        id: json['id'],
-        age: json['Age'],
-        patient_username: json['patient_username']
+        sES: json['SES']??'',
+        nWBV: json['nWBV']??'',
+        mMSE: json['MMSE']??'',
+        eTIV: json['eTIV']??'',
+        eDUC: json['EDUC']??'',
+        aSF: json['ASF']??'',
+        gender: json['gender']??'',
+        result: json['result']??'',
+        date: json['date']??'',
+        id: json['id']??'',
+        age: json['Age']??'',
+        patient_username: json['patient_username']??''
     );
   }
 
